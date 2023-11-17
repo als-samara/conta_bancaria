@@ -1,14 +1,21 @@
 package conta_bancaria;
 
 import java.util.Scanner;
-import conta_bancaria.util.*;
+
+import conta_bancaria.model.Conta;
+import conta_bancaria.util.Cores;
 
 public class Menu {
 	static Scanner leia = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		int opcao;
-
+		
+		Conta c1 = new Conta(1, 123, 1, "Samara", 5000.00f);
+		c1.visualizar();
+		c1.sacar(400.00f);
+		c1.depositar(800.00f);
+		c1.visualizar();
 		
 		while (true) {
 			System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND);
