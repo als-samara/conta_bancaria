@@ -1,9 +1,10 @@
 package conta_bancaria;
 
 import java.util.Scanner;
-
 import conta_bancaria.model.Conta;
 import conta_bancaria.util.Cores;
+import conta_bancaria.model.ContaCorrente;
+import conta_bancaria.model.ContaPoupanca;
 
 public class Menu {
 	static Scanner leia = new Scanner(System.in);
@@ -11,11 +12,27 @@ public class Menu {
 	public static void main(String[] args) {
 		int opcao;
 		
+		// teste da classe conta
 		Conta c1 = new Conta(1, 123, 1, "Samara", 5000.00f);
 		c1.visualizar();
 		c1.sacar(400.00f);
 		c1.depositar(800.00f);
 		c1.visualizar();
+		
+		// teste da classe conta corrente
+		ContaCorrente cc1 = new ContaCorrente(2, 123, 1, "Ian Neves", 1500.00f, 800.00f);
+		cc1.visualizar();
+		cc1.sacar(3000.00f);
+		cc1.sacar(1700.00f);
+		cc1.visualizar();
+		
+		// Teste da Classe Conta Poupança
+		ContaPoupanca cp1 = new ContaPoupanca(2, 123, 2, "Maria dos Santos", 100000.0f, 15);
+		cp1.visualizar();
+		cp1.sacar(1000.0f);
+		cp1.visualizar();
+		cp1.depositar(5000.0f);
+		cp1.visualizar();
 		
 		while (true) {
 			System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND);
