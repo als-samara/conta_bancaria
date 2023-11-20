@@ -32,10 +32,7 @@ public class ContaCorrente extends Conta {
 	}
 	
 	public void depositar(float valor) {
-		if(this.getSaldo()<0 && valor == Math.abs(this.getSaldo())) {
-			this.setSaldo(0);
-			this.setLimite(this.getLimite()+valor);
-		}else if(this.getSaldo()<0 && valor < Math.abs(this.getSaldo())){
+		if(this.getSaldo()<0 && (valor == Math.abs(this.getSaldo()) || valor < Math.abs(this.getSaldo()))) {
 			this.setSaldo(this.getSaldo()+valor);
 			this.setLimite(this.getLimite()+valor);
 		}else if(this.getSaldo()<0 && valor > Math.abs(this.getSaldo())) {

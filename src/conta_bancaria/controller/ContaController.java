@@ -11,7 +11,7 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void procurarPorNumero(int numero) {
-var conta = buscarNaCollection(numero);
+		var conta = buscarNaCollection(numero);
 		
 		if(conta != null)
 			conta.visualizar();
