@@ -31,6 +31,22 @@ public class ContaCorrente extends Conta {
 		return true;
 	}
 	
+	public void depositar(float valor) {
+		if(this.getSaldo()<0 && valor == Math.abs(this.getSaldo())) {
+			this.setSaldo(0);
+			this.setLimite(this.getLimite()+valor);
+		}else if(this.getSaldo()<0 && valor < Math.abs(this.getSaldo())){
+			this.setSaldo(this.getSaldo()+valor);
+			this.setLimite(this.getLimite()+valor);
+		}else if(this.getSaldo()<0 && valor > Math.abs(this.getSaldo())) {
+		    this.setLimite(this.getLimite() + Math.abs(this.getSaldo()));
+			this.setSaldo(valor-Math.abs(this.getSaldo()));
+		}else {
+			this.setSaldo(this.getSaldo()+valor);
+		}
+		
+	}
+	
 	@Override
 	public void visualizar() {
 		super.visualizar();

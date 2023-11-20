@@ -1,7 +1,6 @@
 package conta_bancaria.model;
 
 public abstract class Conta {
-	// Definir os atributos da classe
 	
 	private int numero;
 	private int agencia;
@@ -9,7 +8,6 @@ public abstract class Conta {
 	private String titular;
 	private float saldo;
 	
-	// método construtor começa com letra maiúscula
 	public Conta(int numero, int agencia, int tipo, String titular, float saldo) {
 		this.numero = numero;
 		this.agencia = agencia;
@@ -66,11 +64,11 @@ public abstract class Conta {
 		this.setSaldo(this.getSaldo()-valor);
 		return true;
 	}
+	
 	public void depositar(float valor) {
 		this.setSaldo(this.getSaldo()+valor);
 	}
 	
-	// método auxiliar
 	public void visualizar() {
 		
 		String tipo = "";
