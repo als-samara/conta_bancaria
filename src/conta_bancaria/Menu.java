@@ -2,9 +2,11 @@ package conta_bancaria;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 
 import conta_bancaria.controller.ContaController;
+import conta_bancaria.model.Conta;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -76,18 +78,42 @@ public class Menu {
 				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Criar conta \n\n");
 
 				System.out.println("Digite o Número da Agência: ");
-				agencia = leia.nextInt();
-				System.out.println("Digite o Nome do Titular: ");
-				leia.skip("\\R");
-				titular = leia.nextLine();
+				try {
+					agencia = leia.nextInt();
+				} catch (InputMismatchException e) {
+					System.out.println("\nDigite valores inteiros!");
+					keyPress();
+					break;
+				}
+
+				try {
+					System.out.print("\nDigite o Nome do Titular: ");
+					leia.skip("\\R");
+					titular = leia.nextLine();
+					verificarString(titular);
+				} catch (InputMismatchException e) {
+					System.out.println("Erro: " + e.getMessage());
+					keyPress();
+					break;
+				}
 
 				do {
 					System.out.println("Digite o tipo da conta (1-CC ou 2-CP)");
 					tipo = leia.nextInt();
-				} while (tipo < 1 && tipo > 2);
+				} while (tipo < 1 || tipo > 2);
 
-				System.out.println("Digite o Saldo da Conta (R$): ");
-				saldo = leia.nextFloat();
+				do {
+
+					System.out.print("\nDigite o Saldo da Conta (R$): ");
+					while (!leia.hasNextFloat()) {
+						System.out.println("Por favor, digite um valor válido.");
+						System.out.print("\nDigite o Saldo da Conta (R$): ");
+						leia.next();
+					}
+					saldo = leia.nextFloat();
+					if (saldo < 0)
+						System.out.println("O valor não pode ser negativo!");
+				} while (saldo < 0);
 
 				switch (tipo) {
 				case 1 -> {
@@ -127,16 +153,16 @@ public class Menu {
 
 				System.out.println("Digite o número da conta: ");
 				numero = leia.nextInt();
-				var buscaConta = contas.buscarNaCollection(numero);
+				Optional<Conta> conta = contas.buscarNaCollection(numero);
 
-				if (buscaConta != null) {
-					tipo = buscaConta.getTipo();
+				if (conta.isPresent()) {
+					tipo = conta.get().getTipo();
 					System.out.println("Digite o número da Agência: ");
 					agencia = leia.nextInt();
 					System.out.println("Digite o Nome do Titular: ");
 					leia.skip("\\R");
 					titular = leia.nextLine();
-					
+
 					System.out.println("Digite o Saldo da Conta (R$): ");
 					saldo = leia.nextFloat();
 
@@ -149,18 +175,17 @@ public class Menu {
 					case 2 -> {
 						System.out.println("Digite o dia do Aniversario da Conta: ");
 						aniversario = leia.nextInt();
-						
-					contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+
+						contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
 					}
 					default -> {
 						System.out.println("Tipo de conta inválido!");
 					}
 					}
-					
-				}else {
-					System.out.println("A Conta não foi encontrada!");
+
+				} else {
+					System.out.println("A Conta número " + numero + " não foi encontrada!");
 				}
-				
 
 				keyPress();
 				break;
@@ -168,22 +193,22 @@ public class Menu {
 				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Apagar a conta\n\n");
 				System.out.println("Digite o número da Conta: ");
 				numero = leia.nextInt();
-				
+
 				contas.deletar(numero);
-				
+
 				keyPress();
 				break;
 			case 6:
 				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Saque\n\n");
-				
+
 				System.out.println("Digite o Número da Conta: ");
 				numero = leia.nextInt();
-				
+
 				do {
 					System.out.println("Digite o valor do Saque (R$): ");
 					valor = leia.nextFloat();
-				}while(valor <= 0);
-				
+				} while (valor <= 0);
+
 				contas.sacar(numero, valor);
 
 				keyPress();
@@ -192,12 +217,12 @@ public class Menu {
 				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Depósito\n\n");
 				System.out.println("Digite o número da Conta: ");
 				numero = leia.nextInt();
-				
+
 				do {
 					System.out.println("Digite o valor do Depósito (R$): ");
 					valor = leia.nextFloat();
-				}while(valor <= 0);
-				
+				} while (valor <= 0);
+
 				contas.depositar(numero, valor);
 
 				keyPress();
@@ -205,18 +230,21 @@ public class Menu {
 			case 8:
 				System.out.println(
 						Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND_BRIGHT + "Transferência entre contas\n\n");
-				
+
 				System.out.println("Digite o Número da Conta de Origem: ");
 				numero = leia.nextInt();
 				System.out.println("Digite o Número da Conta de Destino: ");
 				numeroDestino = leia.nextInt();
-				
-				do {
-					System.out.println("Digite o valor da Transferência: ");
-					valor = leia.nextFloat();
-				}while(valor <=0);
-				
-				contas.transferir(numero, numeroDestino, valor);
+
+				if (numero != numeroDestino) {
+					do {
+						System.out.println("Digite o valor da Transferência: ");
+						valor = leia.nextFloat();
+					} while (valor <= 0);
+					contas.transferir(numero, numeroDestino, valor);
+				} else {
+					System.out.println("Os números das Contas são iguais!");
+				}
 
 				keyPress();
 				break;
@@ -241,6 +269,12 @@ public class Menu {
 			System.in.read();
 		} catch (IOException e) {
 			System.out.println("Você pressionou uma tecla diferente de Enter");
+		}
+	}
+
+	public static void verificarString(String input) {
+		if (!input.matches("^[\\p{L}\\s]+$")) {
+			throw new InputMismatchException("O nome do titular só deve conter letras.");
 		}
 	}
 
