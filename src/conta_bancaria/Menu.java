@@ -21,9 +21,6 @@ public class Menu {
 		String titular;
 		float saldo, limite, valor;
 
-		System.out.println("\nCriar Contas\n");
-
-		// Contas para aparecer no método listarTodas();
 		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000f, 100.0f);
 		contas.cadastrar(cc1);
 
@@ -38,76 +35,94 @@ public class Menu {
 
 		contas.listarTodas();
 
-		// Mostrar Menu
 		while (true) {
-			System.out.println(Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND);
-			System.out.println(" ******************************************** ");
-			System.out.println("                                              ");
-			System.out.println("                  RATANABÁ BANK               ");
-			System.out.println("                                              ");
-			System.out.println(" ******************************************** ");
-			System.out.println("                                              ");
-			System.out.println("        1 - Criar Conta                       ");
-			System.out.println("        2 - Listar todas as Contas            ");
-			System.out.println("        3 - Buscar Conta por Numero           ");
-			System.out.println("        4 - Atualizar Dados da Conta          ");
-			System.out.println("        5 - Apagar Conta                      ");
-			System.out.println("        6 - Sacar                             ");
-			System.out.println("        7 - Depositar                         ");
-			System.out.println("        8 - Transferir valores entre Contas   ");
-			System.out.println("        9 - Sair                              ");
-			System.out.println("                                              ");
-			System.out.println(" ******************************************** ");
-			System.out.println("          Entre com a opção desejada:         ");
-			System.out.println("                                              " + Cores.TEXT_RESET);
+			System.out.println(Cores.temaMenu);
+			System.out.println(" ************************************************************** ");
+			System.out.println("                                                                ");
+			System.out.println("                     ** RATANABÁ BANK **                        ");
+			System.out.println("                                                                ");
+			System.out.println(" ************************************************************** ");
+			System.out.println("                                                                ");
+			System.out.println("                   1 - Criar Conta                              ");
+			System.out.println("                   2 - Listar todas as Contas                   ");
+			System.out.println("                   3 - Buscar Conta por Numero                  ");
+			System.out.println("                   4 - Atualizar Dados da Conta                 ");
+			System.out.println("                   5 - Apagar Conta                             ");
+			System.out.println("                   6 - Sacar                                    ");
+			System.out.println("                   7 - Depositar                                ");
+			System.out.println("                   8 - Transferir valores entre Contas          ");
+			System.out.println("                   9 - Sair                                     ");
+			System.out.println("                                                                ");
+			System.out.println(" ************************************************************** ");
+			System.out.println("                                                                ");
+			System.out.println("                    Entre com a opção desejada:                 ");
+			System.out.println("                                                                ");
+			System.out.println(" ************************************************************** " + Cores.TEXT_RESET);
 
 			try {
 				opcao = leia.nextInt();
 			} catch (InputMismatchException e) {
-				System.out.println("\nDigite valores inteiros!");
+				System.out
+						.println(Cores.temaErros + "                    Digite valores inteiros!                    ");
 				leia.nextLine();
 				opcao = 0;
 			}
 			if (opcao == 9) {
-				System.out.println("*** Ratanabá Bank ***");
+				System.out
+						.println(Cores.temaMenu2 + "                                                                ");
+				System.out.println("                          Ratanabá Bank                         ");
+				System.out.println("                                                                ");
 				sobre();
 				break;
 			}
 			switch (opcao) {
 			case 1:
-				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Criar conta \n\n");
+				System.out
+						.println(Cores.temaMenu2 + "                          Criar conta                           ");
+				System.out.println("                                                                ");
 
-				System.out.println("Digite o Número da Agência: ");
+				System.out
+						.println("Digite o Número da Agência:                                     " + Cores.TEXT_RESET);
 				try {
 					agencia = leia.nextInt();
 				} catch (InputMismatchException e) {
-					System.out.println("\nDigite valores inteiros!");
+					System.out.println(
+							Cores.temaErros + "                    Digite valores inteiros!                    ");
 					keyPress();
 					break;
 				}
 
 				try {
-					System.out.print("\nDigite o Nome do Titular: ");
+					System.out.println(Cores.temaMenu2
+							+ "Digite o Nome do Titular:                                       " + Cores.TEXT_RESET);
 					leia.skip("\\R");
 					titular = leia.nextLine();
 					verificarString(titular);
 				} catch (InputMismatchException e) {
-					System.out.println("Erro: " + e.getMessage());
+					System.out.println(Cores.temaErros + "Erro: " + e.getMessage() + "                  ");
+					keyPress();
+					break;
+				}
+
+				try {
+					do {
+						System.out.println(
+								Cores.temaMenu2 + "Digite o tipo da conta (1-CC ou 2-CP)                           "
+										+ Cores.TEXT_RESET);
+						tipo = leia.nextInt();
+					} while (tipo < 1 || tipo > 2);
+				} catch (InputMismatchException e) {
+					System.out.println(Cores.temaErros + "Erro: Tipo inválido!                                            ");
 					keyPress();
 					break;
 				}
 
 				do {
-					System.out.println("Digite o tipo da conta (1-CC ou 2-CP)");
-					tipo = leia.nextInt();
-				} while (tipo < 1 || tipo > 2);
 
-				do {
-
-					System.out.print("\nDigite o Saldo da Conta (R$): ");
+					System.out.print("Digite o Saldo da Conta (R$): ");
 					while (!leia.hasNextFloat()) {
 						System.out.println("Por favor, digite um valor válido.");
-						System.out.print("\nDigite o Saldo da Conta (R$): ");
+						System.out.print("Digite o Saldo da Conta (R$): ");
 						leia.next();
 					}
 					saldo = leia.nextFloat();
@@ -249,7 +264,8 @@ public class Menu {
 				keyPress();
 				break;
 			default:
-				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND_BRIGHT + "Opção inválida! \n");
+				System.out
+						.println(Cores.temaErros + "                        [Opção inválida]                        ");
 				keyPress();
 				break;
 			}
@@ -258,9 +274,13 @@ public class Menu {
 	}
 
 	public static void sobre() {
-		System.out.println("\n*******************************************");
-		System.out.println("Projeto desenvolvido por: ");
-		System.out.println("Samara - samaraalmeida379@gmail.com - github.com/als-samara");
+		System.out.println(Cores.temaMenu2 + " ************************************************************** ");
+		System.out.println("                                                                ");
+		System.out.println("                    Projeto desenvolvido por:                   ");
+		System.out.println("            Samara S. - https://github.com/als-samara           ");
+		System.out.println("                                                                ");
+		System.out.println(" ************************************************************** ");
+		System.out.println("                                                                ");
 	}
 
 	public static void keyPress() {

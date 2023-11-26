@@ -1,6 +1,11 @@
 package conta_bancaria.util;
 
 public class Cores {
+	
+	public static String temaMenu = Cores.TEXT_GREEN_BOLD + Cores.ANSI_BLACK_BACKGROUND;
+	public static String temaErros = Cores.TEXT_RED_BOLD + Cores.ANSI_BLACK_BACKGROUND;
+	public static String temaMenu2 = Cores.TEXT_YELLOW_BOLD + Cores.ANSI_BLACK_BACKGROUND;
+	
 	//Reset Color
 			public static final String TEXT_RESET = "\u001B[0m";
 
