@@ -1,5 +1,7 @@
 package conta_bancaria.model;
 
+import conta_bancaria.util.Cores;
+
 public abstract class Conta {
 	
 	private int numero;
@@ -78,10 +80,10 @@ public abstract class Conta {
 		case 2 -> tipo = "Conta Poupança";
 		}
 		
-		System.out.println("\n\n*******************************");
-		System.out.println("\nDados da conta");
-		System.out.println("\n*******************************");
-		System.out.println("Número da conta: " + this.numero);
+		System.out.println(Cores.temaMenu2 + "\n****************************************************************");
+		System.out.println("Dados da conta:                                                 ");
+		System.out.println("                                                                " + Cores.TEXT_RESET);
+		System.out.println(Cores.TEXT_YELLOW_BRIGHT + "Número da conta: " + this.numero);
 		System.out.println("Tipo da conta: " + tipo);
 		System.out.println("Agência: " + this.agencia);
 		System.out.println("Titular da conta: " + this.titular);

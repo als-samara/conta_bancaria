@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import conta_bancaria.model.Conta;
 import conta_bancaria.repository.ContaRepository;
+import conta_bancaria.util.Cores;
 
 public class ContaController implements ContaRepository {
 	
@@ -18,7 +19,7 @@ public class ContaController implements ContaRepository {
 		if(conta.isPresent())
 			conta.get().visualizar();
 		else
-			System.out.println("\nA Conta número: " + numero + " não foi encontrada");
+			System.out.println(Cores.temaErros + "\nA conta número " + numero + " não foi encontrada                             ");
 		
 	}
 
@@ -33,7 +34,7 @@ public class ContaController implements ContaRepository {
 	@Override
 	public void cadastrar(Conta conta) {
 		listaContas.add(conta);
-		System.out.println("\nA Conta número: " + conta.getNumero() + " foi criada com sucesso!");
+		System.out.println(Cores.confirmacao + "\nA Conta número: " + conta.getNumero() + " foi criada com sucesso!                       ");
 		
 	}
 
@@ -43,9 +44,9 @@ public class ContaController implements ContaRepository {
 		
 		if(buscaConta.isPresent()) {
 			listaContas.set(listaContas.indexOf(buscaConta.get()),  conta);
-			System.out.println("\nA Conta numero: " + conta.getNumero() + " foi atualizada com sucesso!");
+			System.out.println(Cores.confirmacao + "\nA Conta numero: " + conta.getNumero() + " foi atualizada com sucesso!");
 		}else {
-			System.out.println("\nA conta numero: " + conta.getNumero() + " não foi encontrada!");
+			System.out.println(Cores.temaErros + "\nA conta numero: " + conta.getNumero() + " não foi encontrada!");
 		}
 		
 	}
@@ -54,13 +55,11 @@ public class ContaController implements ContaRepository {
 	public void deletar(int numero) {
 		Optional<Conta> conta = buscarNaCollection(numero);
 		
-		if(conta.isPresent()) {
-			if(listaContas.remove(conta.get()) == true) {
-				System.out.println("\nA Conta numero: " + numero + "foi deletada com sucesso!");
-			}else {
-				System.out.println("\nA Conta numero: " + numero + "não foi encontrada!");
-			}
-		}
+		if (conta.isPresent() && listaContas.remove(conta.get())) {
+	        System.out.println(Cores.confirmacao + "\nA Conta número " + numero + " foi deletada com sucesso!");
+	    } else {
+	        System.out.println(Cores.temaErros + "\nA Conta número: " + numero + " não foi encontrada ou não pôde ser deletada!  ");
+	    }
 		
 	}
 

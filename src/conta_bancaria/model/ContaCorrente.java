@@ -1,5 +1,7 @@
 package conta_bancaria.model;
 
+import conta_bancaria.util.Cores;
+
 public class ContaCorrente extends Conta {
 
 	private float limite;
@@ -48,6 +50,9 @@ public class ContaCorrente extends Conta {
 	public void visualizar() {
 		super.visualizar();
 		System.out.println("Limite da conta: " + this.limite);
+		System.out.println(Cores.temaMenu2 + "                                                                ");
+		System.out.println("****************************************************************");
+		
 	}
 	
 	

@@ -112,33 +112,70 @@ public class Menu {
 						tipo = leia.nextInt();
 					} while (tipo < 1 || tipo > 2);
 				} catch (InputMismatchException e) {
-					System.out.println(Cores.temaErros + "Erro: Tipo inválido!                                            ");
+					System.out.println(
+							Cores.temaErros + "Erro: Tipo inválido!                                            ");
 					keyPress();
 					break;
 				}
 
 				do {
-
-					System.out.print("Digite o Saldo da Conta (R$): ");
+					System.out.println(Cores.temaMenu2
+							+ "Digite o Saldo da Conta (R$):                                   " + Cores.TEXT_RESET);
 					while (!leia.hasNextFloat()) {
-						System.out.println("Por favor, digite um valor válido.");
-						System.out.print("Digite o Saldo da Conta (R$): ");
+						System.out.println(
+								Cores.temaErros + "Por favor, digite um valor válido                               ");
+						System.out.println(
+								Cores.temaMenu2 + "Digite o Saldo da Conta (R$):                                   "
+										+ Cores.TEXT_RESET);
 						leia.next();
 					}
 					saldo = leia.nextFloat();
 					if (saldo < 0)
-						System.out.println("O valor não pode ser negativo!");
+						System.out.println(
+								Cores.temaErros + "Erro: O valor não pode ser negativo!                            ");
 				} while (saldo < 0);
 
 				switch (tipo) {
 				case 1 -> {
-					System.out.println("Digite o Limite de Crédito (R$): ");
-					limite = leia.nextFloat();
+					do {
+						System.out.println(
+								Cores.temaMenu2 + "Digite o Limite de Crédito (R$):                                "
+										+ Cores.TEXT_RESET);
+						while (!leia.hasNextFloat()) {
+							System.out.println(Cores.temaErros
+									+ "Erro: Por favor, digite um valor válido                         ");
+							System.out.println(
+									Cores.temaMenu2 + "Digite o Limite de Crédito (R$):                                "
+											+ Cores.TEXT_RESET);
+							leia.next();
+						}
+						limite = leia.nextFloat();
+						if (limite < 0) {
+							System.out.println(Cores.temaErros
+									+ "Erro: O valor não pode ser negativo!                            ");
+						}
+					} while (limite < 0);
+
 					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
 				}
 				case 2 -> {
-					System.out.println("Digite o dia do Aniversario da Conta: ");
-					aniversario = leia.nextInt();
+					do {
+						System.out
+								.println(Cores.temaMenu2 + "Digite o dia do Aniversario da Conta:                           " + Cores.TEXT_RESET);
+						while (!leia.hasNextInt()) {
+							System.out.println(Cores.temaErros
+									+ "Erro: por favor, digite um número inteiro                       ");
+							System.out.println(Cores.temaMenu2
+									+ "Digite o dia do Aniversario da Conta:                           "
+									+ Cores.TEXT_RESET);
+							leia.next();
+						}
+						aniversario = leia.nextInt();
+						if (aniversario < 0 || aniversario > 31) {
+							System.out.println(Cores.temaErros + "Erro: digite um número inteiro positivo, menor ou igual a 31    ");
+						}
+					} while (aniversario < 0 || aniversario > 31);
+
 					contas.cadastrar(
 							new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
 				}
@@ -147,51 +184,85 @@ public class Menu {
 				keyPress();
 				break;
 			case 2:
-				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Listar todas as contas \n\n");
+				System.out
+						.println(Cores.temaMenu2 + "                                                                ");
+				System.out.println("                     Listar todas as contas                     ");
+				System.out.println("                                                                ");
 				contas.listarTodas();
 				keyPress();
 				break;
 			case 3:
-				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND
-						+ "Consultar dados da conta - por número\n\n");
+				System.out.println(
+						Cores.temaMenu2 + "\n            Consultar dados da conta - por número               \n");
 
-				System.out.println("Digite o número da conta: ");
-				numero = leia.nextInt();
-
+				try {
+					System.out.println(
+							"Digite o número da conta:                                       " + Cores.TEXT_RESET);
+					numero = leia.nextInt();
+				} catch (InputMismatchException e) {
+					System.out.println(
+							Cores.temaErros + "Erro: por favor, digite um número de Conta válido!              ");
+					keyPress();
+					break;
+				}
 				contas.procurarPorNumero(numero);
 
 				keyPress();
 				break;
 			case 4:
-				System.out
-						.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Atualizar dados da conta\n\n");
+				System.out.println(
+						Cores.temaMenu2 + "\n                  Atualizar dados da conta                      \n");
 
-				System.out.println("Digite o número da conta: ");
-				numero = leia.nextInt();
+				try {
+					System.out.println("Digite o número da conta:                                       " + Cores.TEXT_RESET);
+					numero = leia.nextInt();
+				} catch (InputMismatchException e) {
+					System.out.println(
+							Cores.temaErros + "\nErro: por favor, digite um número de Conta válido!              ");
+					keyPress();
+					break;
+				}
 				Optional<Conta> conta = contas.buscarNaCollection(numero);
 
 				if (conta.isPresent()) {
 					tipo = conta.get().getTipo();
-					System.out.println("Digite o número da Agência: ");
-					agencia = leia.nextInt();
-					System.out.println("Digite o Nome do Titular: ");
-					leia.skip("\\R");
-					titular = leia.nextLine();
 
-					System.out.println("Digite o Saldo da Conta (R$): ");
-					saldo = leia.nextFloat();
+					try {
+						System.out.println(Cores.temaMenu2 + "Digite o número da Agência:                                     " + Cores.TEXT_RESET);
+						agencia = leia.nextInt();
+					} catch (InputMismatchException e) {
+						System.out.println(
+								Cores.temaErros + "\nErro: por favor, digite um número de Agência válido!            ");
+						keyPress();
+						break;
+					}
+					try {
+						System.out.println(Cores.temaMenu2
+								+ "Digite o Nome do Titular:                                       " + Cores.TEXT_RESET);
+						leia.skip("\\R");
+						titular = leia.nextLine();
+						verificarString(titular);
+					} catch (InputMismatchException e) {
+						System.out.println(Cores.temaErros + "Erro: " + e.getMessage() + "                  ");
+						keyPress();
+						break;
+					}
 
 					switch (tipo) {
 					case 1 -> {
-						System.out.println("Digite o Limite de Crédito (R$): ");
+						System.out.println(Cores.temaMenu2 + "Digite o Limite de Crédito (R$): ");
 						limite = leia.nextFloat();
-						contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+						contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, conta.get().getSaldo(), limite));
+						System.out.println(Cores.TEXT_YELLOW_BOLD
+								+ "\nSaldo da conta: " + conta.get().getSaldo() + "(R$)\nAtenção: o saldo da Conta não pode ser editado!");
 					}
 					case 2 -> {
-						System.out.println("Digite o dia do Aniversario da Conta: ");
+						System.out.println(Cores.temaMenu2 + "Digite o dia do Aniversario da Conta: ");
 						aniversario = leia.nextInt();
 
-						contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+						contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, conta.get().getSaldo(), aniversario));
+						System.out.println(Cores.TEXT_YELLOW_BOLD
+								+ "\nSaldo da conta: " + conta.get().getSaldo() + "(R$)\nAtenção: o saldo da Conta não pode ser editado!");
 					}
 					default -> {
 						System.out.println("Tipo de conta inválido!");
@@ -199,20 +270,27 @@ public class Menu {
 					}
 
 				} else {
-					System.out.println("A Conta número " + numero + " não foi encontrada!");
+					System.out.println(Cores.temaErros + "A Conta número " + numero
+							+ " não foi encontrada!                            ");
 				}
 
 				keyPress();
 				break;
 			case 5:
-				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Apagar a conta\n\n");
-				System.out.println("Digite o número da Conta: ");
-				numero = leia.nextInt();
-
-				contas.deletar(numero);
-
-				keyPress();
+				System.out.println(Cores.temaMenu2 + "\n                        Apagar a conta                          \n");
+				
+				try {
+					System.out.println("Digite o número da Conta:                                       " + Cores.TEXT_RESET);
+					numero = leia.nextInt();
+					contas.deletar(numero);
+					keyPress();
+				}catch(InputMismatchException e) {
+					System.out.println(Cores.temaErros + "Digite um número válido!                                        ");
+					keyPress();
+					break;
+				}
 				break;
+				
 			case 6:
 				System.out.println(Cores.TEXT_WHITE_BOLD + Cores.ANSI_GREEN_BACKGROUND + "Saque\n\n");
 

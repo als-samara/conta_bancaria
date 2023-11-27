@@ -1,5 +1,7 @@
 package conta_bancaria.model;
 
+import conta_bancaria.util.Cores;
+
 public class ContaPoupanca extends Conta {
 
 	private int aniversario;
@@ -21,6 +23,8 @@ public class ContaPoupanca extends Conta {
 	public void visualizar() {
 		super.visualizar();
 		System.out.println("Aniversário da conta: " + this.aniversario);
+		System.out.println(Cores.temaMenu2 + "                                                                ");
+		System.out.println("****************************************************************");
 	}
 
 }
