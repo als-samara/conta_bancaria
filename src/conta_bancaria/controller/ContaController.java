@@ -56,7 +56,7 @@ public class ContaController implements ContaRepository {
 		Optional<Conta> conta = buscarNaCollection(numero);
 		
 		if (conta.isPresent() && listaContas.remove(conta.get())) {
-	        System.out.println(Cores.confirmacao + "\nA Conta número " + numero + " foi deletada com sucesso!");
+	        System.out.println(Cores.confirmacao + "\nA Conta número " + numero + " foi deletada com sucesso!                      ");
 	    } else {
 	        System.out.println(Cores.temaErros + "\nA Conta número: " + numero + " não foi encontrada ou não pôde ser deletada!  ");
 	    }
@@ -69,10 +69,10 @@ public class ContaController implements ContaRepository {
 		
 		if(conta.isPresent()) {
 			if(conta.get().sacar(valor) == true) {
-				System.out.println("\nO Saque na Conta numero: " + numero + "foi efetuado com sucesso!");
+				System.out.println(Cores.confirmacao + "\nO Saque na Conta numero " + numero + " foi efetuado com sucesso!");
 			} 
 		}else {
-			System.out.println("\nA Conta numero: " + numero + " não foi encontrada!");
+			System.out.println(Cores.temaErros + "\nA Conta numero " + numero + " não foi encontrada!                           ");
 		}
 		
 	}
@@ -83,9 +83,9 @@ public class ContaController implements ContaRepository {
 		
 		if(conta.isPresent()) {
 			conta.get().depositar(valor);
-			System.out.println("\nO Depósito na Conta número: " + numero + " foi efetuado com sucesso!");
+			System.out.println(Cores.confirmacao + "\nO Depósito na Conta número " + numero + " foi efetuado com sucesso!          ");
 		}else {
-			System.out.println("\nA Conta numero: " + numero + " não foi encontrada ou a Conta destino não é uma Conta Corrente!");
+			System.out.println(Cores.temaErros + "\nA Conta numero: " + numero + " não foi encontrada!                          ");
 		}
 		
 	}
@@ -99,10 +99,10 @@ public class ContaController implements ContaRepository {
 			
 			if(contaOrigem.get().sacar(valor) == true) {
 				contaDestino.get().depositar(valor);
-				System.out.println("\nA Transferência da Conta numero " + numeroOrigem + " para a Conta numero " + numeroDestino + " foi efetuada com sucesso!");
+				System.out.println(Cores.confirmacao + "\nA Transferência da Conta numero " + numeroOrigem + " para a Conta numero " + numeroDestino + " foi efetuada com sucesso!");
 			}
 		}else {
-			System.out.println("\nA Conta de Origem e/ou Destino não foram encontradas!");
+			System.out.println(Cores.temaErros + "\nA Conta de Origem e/ou Destino não foram encontradas!           ");
 		}
 		
 	}
@@ -119,6 +119,14 @@ public class ContaController implements ContaRepository {
 		}
 		
 		return Optional.empty();
+	}
+	
+	public float retornarSaldo(int numero) {
+		for(var conta : listaContas) {
+			if(conta.getNumero() == numero)
+				return conta.getSaldo();
+		}
+		return numero;
 	}
 	
 }
