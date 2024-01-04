@@ -51,7 +51,8 @@ public class Menu {
 			System.out.println("                   6 - Sacar                                    ");
 			System.out.println("                   7 - Depositar                                ");
 			System.out.println("                   8 - Transferir valores entre Contas          ");
-			System.out.println("                   9 - Sair                                     ");
+			System.out.println("                   9 - Consulta por Titular                     ");
+			System.out.println("                   0 - Sair                                     ");
 			System.out.println("                                                                ");
 			System.out.println(" ************************************************************** ");
 			System.out.println("                                                                ");
@@ -65,9 +66,9 @@ public class Menu {
 				System.out
 						.println(Cores.temaErros + "                    Digite valores inteiros!                    ");
 				leia.nextLine();
-				opcao = 0;
+				opcao = 10;
 			}
-			if (opcao == 9) {
+			if (opcao == 0) {
 				System.out
 						.println(Cores.temaMenu2 + "                                                                ");
 				System.out.println("                          Ratanabá Bank                         ");
@@ -411,16 +412,16 @@ public class Menu {
 					keyPress();
 					break;
 				}
-				
+
 				if (numero != numeroDestino) {
 					System.out.println(Cores.ANSI_GREEN_BACKGROUND_BRIGHT + "\nSaldo disponível para Saque: "
 							+ contas.retornarSaldo(numero) + "(R$)                         \n");
 					do {
-						System.out.println(Cores.temaMenu2
-								+ "Digite o valor da Transferência:                                ");
+						System.out.println(
+								Cores.temaMenu2 + "Digite o valor da Transferência:                                ");
 						while (!leia.hasNextFloat()) {
-							System.out.println(
-									Cores.temaErros + "Por favor, digite um valor válido                               ");
+							System.out.println(Cores.temaErros
+									+ "Por favor, digite um valor válido                               ");
 							System.out.println(
 									Cores.temaMenu2 + "Digite o valor do Depósito (R$):                                "
 											+ Cores.TEXT_RESET);
@@ -429,12 +430,22 @@ public class Menu {
 						valor = leia.nextFloat();
 					} while (valor <= 0);
 					contas.transferir(numero, numeroDestino, valor);
-				
+
 				} else {
-					System.out.println(Cores.temaErros + "Os números das Contas são iguais!                               ");
+					System.out.println(
+							Cores.temaErros + "Os números das Contas são iguais!                               ");
 				}
 
 				keyPress();
+				break;
+			case 9:
+				System.out.println("\nConsula por Titular\n");
+
+				System.out.println(Cores.temaMenu2 + "Digite o Nome do Titular:                                       "
+						+ Cores.TEXT_RESET);
+				leia.skip("\\R");
+				titular = leia.nextLine();
+				contas.procurarPorNome(titular);
 				break;
 			default:
 				System.out
