@@ -56,5 +56,5 @@ Contribuições são bem-vindas! Se encontrar algum problema ou tiver sugestões
 
 ## Contatos
 
-[![Me envie um e-mail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:samaraalmeida379@gmail.com)
-[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/als-samara)
+[![Me envie um e-mail](https://img.shields.io/badge/Email-samaraalmeida379@gmail.com-red)](mailto:samaraalmeida379@gmail.com)<br>
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Me_envie_um_pedido_de_conexão!-blue)](https://www.linkedin.com/in/samara-almeida-als/)
