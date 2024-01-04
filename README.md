@@ -50,6 +50,9 @@ O desafio proposto era desenvolver um sistema de conta bancária com as seguinte
 
 6. Siga as instruções exibidas no console para interagir com o sistema de conta bancária.
 
+## Preview
+![Preview](./src/images/preview.gif)
+
 ## Contribuição
 
 Contribuições são bem-vindas! Se encontrar algum problema ou tiver sugestões de melhorias, sinta-se à vontade para abrir uma issue ou criar um pull request.
